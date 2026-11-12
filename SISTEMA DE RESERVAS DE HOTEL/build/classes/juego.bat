@@ -1,0 +1,45 @@
+@echo off
+title Adivina el Numero
+color 0a
+set /a intentos=0
+set /a secreto=%random% %% 100 + 1
+
+:inicio
+cls
+echo ========================================
+echo       JUEGO: ADIVINA EL NUMERO
+echo ========================================
+echo Estoy pensando en un numero del 1 al 100.
+echo Intentos realizados: %intentos%
+echo.
+
+:pedir
+set /p intento=Escribe tu numero y presiona Enter: 
+set /a intentos+=1
+
+if %intento% GTR %secreto% (
+    echo Muy alto. Intenta con un numero menor.
+    echo.
+    goto pedir
+)
+if %intento% LSS %secreto% (
+    echo Muy bajo. Intenta con un numero mayor.
+    echo.
+    goto pedir
+)
+if %intento% EQU %secreto% (
+    echo.
+    echo ¡Felicidades! Adivinaste el numero %secreto% en %intentos% intentos.
+    pause
+    goto preguntar
+)
+
+:preguntar
+cls
+set /p jugar=¿Quieres jugar de nuevo? (s/n): 
+if /i "%jugar%"=="s" (
+    set /a intentos=0
+    set /a secreto=%random% %% 100 + 1
+    goto inicio
+)
+exit
